@@ -1,0 +1,27 @@
+buildscript {
+	dependencies {
+    classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
+  }
+}
+
+apply plugin: 'com.moowork.node'
+
+version '0.0.1'
+
+node {
+    version = '8.12.0'
+    npmVersion = '6.4.1'
+    download = true
+    workDir = file("${project.buildDir}/node")
+    nodeModulesDir = file("${project.projectDir}")
+}
+
+// Creates Dist TAR file
+task tarDist(type: Tar) {
+  archiveName = 'dist.tar'
+  from (file("${project.buildDir}/dist"))
+  into ('/dist/') 
+  destinationDir  file(project.buildDir)
+  extension 'tar'
+  compression = Compression.GZIP
+}
